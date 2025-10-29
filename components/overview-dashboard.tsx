@@ -17,6 +17,7 @@ import {
   AlertCircle,
   CheckCircle,
   Clock,
+  MessagesSquare,
 } from "lucide-react"
 import Link from "next/link"
 import {
@@ -36,8 +37,8 @@ import {
 const overviewStats = {
   totalStudents: 25,
   borderlineStudents: 25,
-  receivingSupport: 22,
-  needsAttention: 3,
+  receivingSupport: 6,
+  needsAttention: 2,
 }
 
 const recentActivity = [
@@ -48,18 +49,18 @@ const recentActivity = [
 ]
 
 const weeklyProgress = [
-  { day: "월", completed: 12, planned: 15 },
-  { day: "화", completed: 14, planned: 15 },
-  { day: "수", completed: 13, planned: 15 },
-  { day: "목", completed: 15, planned: 15 },
-  { day: "금", completed: 11, planned: 15 },
+  { day: "월", completed: 4, planned: 6 },
+  { day: "화", completed: 5, planned: 6 },
+  { day: "수", completed: 4, planned: 6 },
+  { day: "목", completed: 6, planned: 6 },
+  { day: "금", completed: 3, planned: 6 },
 ]
 
 const supportDistribution = [
-  { name: "학습 지원", value: 12, color: "#3b82f6" },
-  { name: "정서 지원", value: 6, color: "#ef4444" },
-  { name: "사회성 지원", value: 4, color: "#a855f7" },
-  { name: "행동 지원", value: 3, color: "#f97316" },
+  { name: "학습 지원", value: 3, color: "#3b82f6" },
+  { name: "정서 지원", value: 1, color: "#ef4444" },
+  { name: "사회성 지원", value: 1, color: "#a855f7" },
+  { name: "행동 지원", value: 1, color: "#f97316" },
 ]
 
 export function OverviewDashboard() {
@@ -93,13 +94,19 @@ export function OverviewDashboard() {
           <Link href="/ai-intervention">
             <Button variant="ghost" className="w-full justify-start">
               <Brain className="mr-2 h-4 w-4" />
-              AI 중재 도구
+              AI 추천 도구
             </Button>
           </Link>
           <Link href="/analytics">
             <Button variant="ghost" className="w-full justify-start">
               <TrendingUp className="mr-2 h-4 w-4" />
-              정책 분석
+              프로젝트 분석
+            </Button>
+          </Link>
+          <Link href="/community">
+            <Button variant="ghost" className="w-full justify-start">
+              <MessagesSquare className="mr-2 h-4 w-4" />
+              커뮤니티
             </Button>
           </Link>
           <Button variant="ghost" className="w-full justify-start">
@@ -119,7 +126,7 @@ export function OverviewDashboard() {
             </div>
             <div>
               <h1 className="text-3xl font-bold">전체 현황</h1>
-              <p className="text-muted-foreground">강원도 교육청 경계선 지적기능 학생 지원 대시보드</p>
+              <p className="text-muted-foreground">강원도 추천초등학교 2학년 3반</p>
             </div>
           </div>
         </div>
@@ -305,7 +312,7 @@ export function OverviewDashboard() {
               <Link href="/analytics">
                 <Button variant="outline" className="w-full justify-start bg-transparent">
                   <TrendingUp className="mr-2 h-4 w-4" />
-                  정책 분석 보기
+                  프로젝트 분석 보기
                 </Button>
               </Link>
             </CardContent>
@@ -335,12 +342,6 @@ export function OverviewDashboard() {
                   issue: "학습 참여도 감소",
                   lastUpdate: "3일 전",
                   priority: "medium",
-                },
-                {
-                  name: "강태민",
-                  issue: "정서적 불안정",
-                  lastUpdate: "1일 전",
-                  priority: "high",
                 },
               ].map((student, idx) => (
                 <div key={idx} className="flex items-center justify-between rounded-lg border p-4">

@@ -25,6 +25,7 @@ import {
   ImageIcon,
   Download,
   Activity,
+  MessagesSquare,
 } from "lucide-react"
 
 interface Message {
@@ -38,25 +39,22 @@ interface Message {
 
 interface Channel {
   id: string
-  name: string
   studentName: string
   participants: number
   lastMessage: string
   unread: number
 }
 
-const channels: Channel[] = [
+const studentChannels: Channel[] = [
   {
     id: "1",
-    name: "김민준 지원팀",
     studentName: "김민준",
     participants: 5,
     lastMessage: "수학 학습 전략 수정안 공유드립니다",
-    unread: 2,
+    unread: 0,
   },
   {
     id: "2",
-    name: "박서연 IEP 회의",
     studentName: "박서연",
     participants: 4,
     lastMessage: "다음 주 화요일 회의 일정 확인 부탁드립니다",
@@ -64,11 +62,55 @@ const channels: Channel[] = [
   },
   {
     id: "3",
-    name: "이준호 행동 중재",
     studentName: "이준호",
     participants: 6,
     lastMessage: "긍정적 행동 지원 계획서 업로드했습니다",
+    unread: 2,
+  },
+  {
+    id: "4",
+    studentName: "최지우",
+    participants: 4,
+    lastMessage: "학습 자료 검토 완료했습니다",
+    unread: 0,
+  },
+  {
+    id: "5",
+    studentName: "정수아",
+    participants: 5,
+    lastMessage: "상담 일정 조율이 필요합니다",
+    unread: 0,
+  },
+  {
+    id: "6",
+    studentName: "김민주",
+    participants: 4,
+    lastMessage: "IEP 회의 자료 준비 중입니다",
+    unread: 2,
+  },
+]
+
+const specialistChannels: Channel[] = [
+  {
+    id: "s1",
+    studentName: "사회복지사 김태희",
+    participants: 8,
+    lastMessage: "가정 방문 일정 공유드립니다",
     unread: 1,
+  },
+  {
+    id: "s2",
+    studentName: "상담사 이민정",
+    participants: 6,
+    lastMessage: "정서 지원 프로그램 안내",
+    unread: 0,
+  },
+  {
+    id: "s3",
+    studentName: "평생교육원 박수진",
+    participants: 7,
+    lastMessage: "경계선지능인 교육 자료 공유",
+    unread: 0,
   },
 ]
 
@@ -112,14 +154,17 @@ const messages: Message[] = [
 ]
 
 export function CollaborationChannel() {
-  const [selectedChannel, setSelectedChannel] = useState(channels[0])
+  const [selectedChannel, setSelectedChannel] = useState(studentChannels[0])
   const [messageInput, setMessageInput] = useState("")
-  const [readChannels, setReadChannels] = useState<Set<string>>(new Set([channels[0].id]))
+  const [readChannels, setReadChannels] = useState<Set<string>>(new Set([studentChannels[0].id]))
+  const [channelType, setChannelType] = useState<"students" | "specialists">("students")
 
   const handleChannelSelect = (channel: Channel) => {
     setSelectedChannel(channel)
     setReadChannels((prev) => new Set(prev).add(channel.id))
   }
+
+  const displayChannels = channelType === "students" ? studentChannels : specialistChannels
 
   return (
     <div className="min-h-screen bg-background">
@@ -151,13 +196,19 @@ export function CollaborationChannel() {
           <Link href="/ai-intervention">
             <Button variant="ghost" className="w-full justify-start">
               <Brain className="mr-2 h-4 w-4" />
-              AI 중재 도구
+              AI 추천 도구
             </Button>
           </Link>
           <Link href="/analytics">
             <Button variant="ghost" className="w-full justify-start">
               <TrendingUp className="mr-2 h-4 w-4" />
-              정책 분석
+              프로젝트 분석
+            </Button>
+          </Link>
+          <Link href="/community">
+            <Button variant="ghost" className="w-full justify-start">
+              <MessagesSquare className="mr-2 h-4 w-4" />
+              커뮤니티
             </Button>
           </Link>
           <Button variant="ghost" className="w-full justify-start">
@@ -178,15 +229,27 @@ export function CollaborationChannel() {
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
+
+            <Tabs value={channelType} onValueChange={(v) => setChannelType(v as "students" | "specialists")}>
+              <TabsList className="mb-3 w-full">
+                <TabsTrigger value="students" className="flex-1">
+                  지원 학생
+                </TabsTrigger>
+                <TabsTrigger value="specialists" className="flex-1">
+                  전문가
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input placeholder="채널 검색..." className="pl-9" />
             </div>
           </div>
 
-          <ScrollArea className="h-[calc(100vh-9rem)]">
+          <ScrollArea className="h-[calc(100vh-12rem)]">
             <div className="space-y-1 p-2">
-              {channels.map((channel) => (
+              {displayChannels.map((channel) => (
                 <button
                   key={channel.id}
                   onClick={() => handleChannelSelect(channel)}
@@ -197,7 +260,7 @@ export function CollaborationChannel() {
                   <div className="mb-1 flex items-start justify-between">
                     <div className="flex items-center gap-2">
                       <MessageSquare className="h-4 w-4 text-primary" />
-                      <span className="font-medium">{channel.name}</span>
+                      <span className="font-medium">{channel.studentName}</span>
                     </div>
                     {channel.unread > 0 && !readChannels.has(channel.id) && (
                       <Badge variant="default" className="h-5 min-w-5 px-1 text-xs">
@@ -205,7 +268,6 @@ export function CollaborationChannel() {
                       </Badge>
                     )}
                   </div>
-                  <p className="mb-2 text-xs text-muted-foreground">학생: {channel.studentName}</p>
                   <p className="truncate text-sm text-muted-foreground">{channel.lastMessage}</p>
                   <div className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
                     <Users className="h-3 w-3" />
@@ -222,7 +284,7 @@ export function CollaborationChannel() {
           {/* Chat Header */}
           <div className="flex items-center justify-between border-b bg-card p-4">
             <div>
-              <h3 className="font-semibold">{selectedChannel.name}</h3>
+              <h3 className="font-semibold">{selectedChannel.studentName}</h3>
               <p className="text-sm text-muted-foreground">{selectedChannel.participants}명의 참여자</p>
             </div>
             <div className="flex gap-2">

@@ -19,6 +19,10 @@ import {
   MessageSquare,
   Settings,
   Activity,
+  ArrowLeft,
+  Star,
+  AlertCircle,
+  MessagesSquare,
 } from "lucide-react"
 import { StudentTimeline } from "@/components/student-timeline"
 import { MultidimensionalChart } from "@/components/multidimensional-chart"
@@ -35,6 +39,10 @@ const studentData = {
   status: "경계선 지적기능",
   enrollmentDate: "2021-03-02",
   lastAssessment: "2024-10-15",
+  interests: ["레고 조립", "공룡", "자동차"],
+  likes: ["체육 시간", "미술 활동", "친구들과 놀기"],
+  specialNotes:
+    "시각적 자료에 잘 반응하며, 칭찬을 통한 동기부여가 효과적입니다. 수학 개념 이해에 어려움이 있으나 구체물을 활용하면 이해도가 향상됩니다.",
   dimensions: {
     cognitive: 65,
     learning: 58,
@@ -50,7 +58,12 @@ const studentData = {
   ],
 }
 
-export function StudentProfileDashboard() {
+interface StudentProfileDashboardProps {
+  studentId: string
+  onBack: () => void
+}
+
+export function StudentProfileDashboard({ studentId, onBack }: StudentProfileDashboardProps) {
   const [selectedStudent] = useState(studentData)
 
   return (
@@ -83,13 +96,19 @@ export function StudentProfileDashboard() {
           <Link href="/ai-intervention">
             <Button variant="ghost" className="w-full justify-start">
               <Brain className="mr-2 h-4 w-4" />
-              AI 중재 도구
+              AI 추천 도구
             </Button>
           </Link>
           <Link href="/analytics">
             <Button variant="ghost" className="w-full justify-start">
               <TrendingUp className="mr-2 h-4 w-4" />
-              정책 분석
+              프로젝트 분석
+            </Button>
+          </Link>
+          <Link href="/community">
+            <Button variant="ghost" className="w-full justify-start">
+              <MessagesSquare className="mr-2 h-4 w-4" />
+              커뮤니티
             </Button>
           </Link>
           <Button variant="ghost" className="w-full justify-start">
@@ -101,6 +120,11 @@ export function StudentProfileDashboard() {
 
       {/* Main Content */}
       <main className="ml-64 p-8">
+        <Button variant="ghost" onClick={onBack} className="mb-6">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          학생 목록으로 돌아가기
+        </Button>
+
         {/* Header */}
         <div className="mb-8 flex items-start justify-between">
           <div className="flex items-start gap-6">
@@ -132,6 +156,56 @@ export function StudentProfileDashboard() {
             <FileText className="mr-2 h-4 w-4" />
             보고서 생성
           </Button>
+        </div>
+
+        <div className="mb-8 grid gap-4 md:grid-cols-3">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-sm font-medium">
+                <Star className="h-4 w-4 text-yellow-500" />
+                관심사
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2">
+                {selectedStudent.interests.map((interest, idx) => (
+                  <Badge key={idx} variant="secondary">
+                    {interest}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-sm font-medium">
+                <Heart className="h-4 w-4 text-red-500" />
+                좋아하는 것
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2">
+                {selectedStudent.likes.map((like, idx) => (
+                  <Badge key={idx} variant="secondary">
+                    {like}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-sm font-medium">
+                <AlertCircle className="h-4 w-4 text-blue-500" />
+                특이사항
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">{selectedStudent.specialNotes}</p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Multidimensional Overview */}

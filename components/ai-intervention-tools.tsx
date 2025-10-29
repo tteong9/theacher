@@ -23,6 +23,8 @@ import {
   Clock,
   Star,
   Activity,
+  ArrowLeft,
+  MessagesSquare,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -129,7 +131,12 @@ const iepGoals: IEPGoal[] = [
   },
 ]
 
-export function AIInterventionTools() {
+interface AIInterventionToolsProps {
+  studentId: string
+  onBack: () => void
+}
+
+export function AIInterventionTools({ studentId, onBack }: AIInterventionToolsProps) {
   const [selectedStudent] = useState("김민준")
   const [generatingReport, setGeneratingReport] = useState(false)
 
@@ -168,13 +175,19 @@ export function AIInterventionTools() {
           <Link href="/ai-intervention">
             <Button variant="secondary" className="w-full justify-start">
               <Brain className="mr-2 h-4 w-4" />
-              AI 중재 도구
+              AI 추천 도구
             </Button>
           </Link>
           <Link href="/analytics">
             <Button variant="ghost" className="w-full justify-start">
               <TrendingUp className="mr-2 h-4 w-4" />
-              정책 분석
+              프로젝트 분석
+            </Button>
+          </Link>
+          <Link href="/community">
+            <Button variant="ghost" className="w-full justify-start">
+              <MessagesSquare className="mr-2 h-4 w-4" />
+              커뮤니티
             </Button>
           </Link>
           <Button variant="ghost" className="w-full justify-start">
@@ -186,6 +199,11 @@ export function AIInterventionTools() {
 
       {/* Main Content */}
       <main className="ml-64 p-8">
+        <Button variant="ghost" onClick={onBack} className="mb-6">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          전체 학생 목록으로 돌아가기
+        </Button>
+
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3">
@@ -193,7 +211,7 @@ export function AIInterventionTools() {
               <Brain className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">AI 중재 도구</h1>
+              <h1 className="text-3xl font-bold">AI 추천 도구</h1>
               <p className="text-muted-foreground">인공지능 기반 맞춤형 학습 지원 및 중재 계획</p>
             </div>
           </div>
@@ -209,7 +227,9 @@ export function AIInterventionTools() {
                 <p className="font-semibold">{selectedStudent}</p>
               </div>
             </div>
-            <Button variant="outline">학생 변경</Button>
+            <Button variant="outline" onClick={onBack}>
+              학생 변경
+            </Button>
           </CardContent>
         </Card>
 

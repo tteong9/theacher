@@ -22,6 +22,7 @@ import {
   ArrowDown,
   Download,
   Filter,
+  MessagesSquare,
 } from "lucide-react"
 import Link from "next/link"
 import {
@@ -111,13 +112,19 @@ export function AdminAnalyticsDashboard() {
           <Link href="/ai-intervention">
             <Button variant="ghost" className="w-full justify-start">
               <Brain className="mr-2 h-4 w-4" />
-              AI 중재 도구
+              AI 추천 도구
             </Button>
           </Link>
           <Link href="/analytics">
             <Button variant="secondary" className="w-full justify-start">
               <TrendingUp className="mr-2 h-4 w-4" />
-              정책 분석
+              프로젝트 분석
+            </Button>
+          </Link>
+          <Link href="/community">
+            <Button variant="ghost" className="w-full justify-start">
+              <MessagesSquare className="mr-2 h-4 w-4" />
+              커뮤니티
             </Button>
           </Link>
           <Button variant="ghost" className="w-full justify-start">
@@ -137,7 +144,7 @@ export function AdminAnalyticsDashboard() {
                 <TrendingUp className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">정책 분석 대시보드</h1>
+                <h1 className="text-3xl font-bold">프로젝트 분석 대시보드</h1>
                 <p className="text-muted-foreground">강원도 교육청 경계선 지적기능 학생 지원 현황</p>
               </div>
             </div>
