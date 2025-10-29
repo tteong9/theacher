@@ -27,6 +27,7 @@ import {
   Activity,
   MessagesSquare,
   ChevronLeft,
+  Target,
 } from "lucide-react"
 
 interface Message {
@@ -88,6 +89,13 @@ const studentChannels: Channel[] = [
     participants: 4,
     lastMessage: "IEP 회의 자료 준비 중입니다",
     unread: 2,
+  },
+  {
+    id: "7",
+    studentName: "김민지",
+    participants: 4,
+    lastMessage: "학습 진도 점검이 필요합니다",
+    unread: 0,
   },
 ]
 
@@ -216,6 +224,23 @@ const channelMessages: Record<string, Message[]> = {
       timestamp: "오후 4:30",
     },
   ],
+  "7": [
+    {
+      id: "1",
+      sender: "이지은",
+      role: "담임교사",
+      content: "김민지 학생의 학습 진도를 점검하고 싶습니다. 최근 국어 과목에서 어려움을 겪고 있는 것 같아요.",
+      timestamp: "오전 10:00",
+    },
+    {
+      id: "2",
+      sender: "박수진",
+      role: "특수교사",
+      content:
+        "네, 확인했습니다. 읽기 이해 부분에 집중적인 지원이 필요할 것 같습니다. 개별 학습 자료를 준비해보겠습니다.",
+      timestamp: "오전 11:30",
+    },
+  ],
   s1: [
     {
       id: "1",
@@ -319,6 +344,12 @@ export function CollaborationChannel() {
             <Button variant="ghost" className="w-full justify-start">
               <MessagesSquare className="mr-2 h-4 w-4" />
               커뮤니티
+            </Button>
+          </Link>
+          <Link href="/mission-create">
+            <Button variant="ghost" className="w-full justify-start">
+              <Target className="mr-2 h-4 w-4" />
+              미션 생성
             </Button>
           </Link>
           <Button variant="ghost" className="w-full justify-start">

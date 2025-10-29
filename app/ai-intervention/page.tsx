@@ -31,6 +31,7 @@ const supportStudents = [
   { id: "4", name: "최지우", grade: "초등 4학년", status: "보통" },
   { id: "5", name: "정수아", grade: "초등 3학년", status: "주의" },
   { id: "6", name: "김민주", grade: "초등 4학년", status: "보통" },
+  { id: "7", name: "김민지", grade: "초등 4학년", status: "보통" },
 ]
 
 export default function AIInterventionPage() {
@@ -117,7 +118,7 @@ export default function AIInterventionPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold">6명</div>
+              <div className="text-3xl font-bold">7명</div>
               <p className="mt-1 text-sm text-muted-foreground">활발히 지원 중</p>
             </CardContent>
           </Card>

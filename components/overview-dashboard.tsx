@@ -18,6 +18,7 @@ import {
   CheckCircle,
   Clock,
   MessagesSquare,
+  Target,
 } from "lucide-react"
 import Link from "next/link"
 import {
@@ -107,6 +108,12 @@ export function OverviewDashboard() {
             <Button variant="ghost" className="w-full justify-start">
               <MessagesSquare className="mr-2 h-4 w-4" />
               커뮤니티
+            </Button>
+          </Link>
+          <Link href="/mission-create">
+            <Button variant="ghost" className="w-full justify-start">
+              <Target className="mr-2 h-4 w-4" />
+              미션 생성
             </Button>
           </Link>
           <Button variant="ghost" className="w-full justify-start">

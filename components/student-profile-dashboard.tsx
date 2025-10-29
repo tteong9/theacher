@@ -23,6 +23,7 @@ import {
   Star,
   AlertCircle,
   MessagesSquare,
+  Target,
 } from "lucide-react"
 import { StudentTimeline } from "@/components/student-timeline"
 import { MultidimensionalChart } from "@/components/multidimensional-chart"
@@ -109,6 +110,12 @@ export function StudentProfileDashboard({ studentId, onBack }: StudentProfileDas
             <Button variant="ghost" className="w-full justify-start">
               <MessagesSquare className="mr-2 h-4 w-4" />
               커뮤니티
+            </Button>
+          </Link>
+          <Link href="/mission-create">
+            <Button variant="ghost" className="w-full justify-start">
+              <Target className="mr-2 h-4 w-4" />
+              미션 생성
             </Button>
           </Link>
           <Button variant="ghost" className="w-full justify-start">
