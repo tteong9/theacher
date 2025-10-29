@@ -1,9 +1,5 @@
-import { Suspense } from "react"
+import { CommunityBoard } from "@/components/community-board"
 
 export default function CommunityPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div>Community Page - Coming Soon</div>
-    </Suspense>
-  )
+  return <CommunityBoard />
 }

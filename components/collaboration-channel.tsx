@@ -26,6 +26,7 @@ import {
   Download,
   Activity,
   MessagesSquare,
+  ChevronLeft,
 } from "lucide-react"
 
 interface Message {
@@ -114,50 +115,158 @@ const specialistChannels: Channel[] = [
   },
 ]
 
-const messages: Message[] = [
-  {
-    id: "1",
-    sender: "이지은",
-    role: "담임교사",
-    content:
-      "안녕하세요. 김민준 학생의 최근 수학 수업 참여도가 많이 향상되었습니다. 특히 시각적 자료를 활용한 설명에 집중력이 높아졌어요.",
-    timestamp: "오전 9:30",
-  },
-  {
-    id: "2",
-    sender: "박수진",
-    role: "특수교사",
-    content:
-      "좋은 소식이네요! 시각적 학습 전략이 효과적인 것 같습니다. 다음 주부터 수학 학습지에도 더 많은 그림과 도표를 추가해보겠습니다.",
-    timestamp: "오전 10:15",
-    attachments: [{ name: "수학_학습지_샘플.pdf", type: "pdf" }],
-  },
-  {
-    id: "3",
-    sender: "김태희",
-    role: "상담교사",
-    content: "정서적으로도 안정감을 보이고 있습니다. 지난주 상담에서 학교생활에 대한 긍정적인 이야기를 많이 했어요.",
-    timestamp: "오전 11:20",
-  },
-  {
-    id: "4",
-    sender: "최민호",
-    role: "학교사회복지사",
-    content:
-      "가정 방문 결과 공유드립니다. 부모님께서도 학교 지원에 매우 만족하고 계시며, 가정에서도 시각적 학습 자료를 활용하고 싶다고 하셨습니다.",
-    timestamp: "오후 2:45",
-    attachments: [
-      { name: "가정방문_보고서.docx", type: "doc" },
-      { name: "학부모_면담_사진.jpg", type: "image" },
-    ],
-  },
-]
+const channelMessages: Record<string, Message[]> = {
+  "1": [
+    {
+      id: "1",
+      sender: "이지은",
+      role: "담임교사",
+      content:
+        "안녕하세요. 김민준 학생의 최근 수학 수업 참여도가 많이 향상되었습니다. 특히 시각적 자료를 활용한 설명에 집중력이 높아졌어요.",
+      timestamp: "오전 9:30",
+    },
+    {
+      id: "2",
+      sender: "박수진",
+      role: "특수교사",
+      content:
+        "좋은 소식이네요! 시각적 학습 전략이 효과적인 것 같습니다. 다음 주부터 수학 학습지에도 더 많은 그림과 도표를 추가해보겠습니다.",
+      timestamp: "오전 10:15",
+      attachments: [{ name: "수학_학습지_샘플.pdf", type: "pdf" }],
+    },
+  ],
+  "2": [
+    {
+      id: "1",
+      sender: "김태희",
+      role: "상담교사",
+      content: "박서연 학생의 IEP 회의 일정을 다음 주 화요일 오후 2시로 잡았습니다. 참석 가능하신가요?",
+      timestamp: "오전 11:00",
+    },
+    {
+      id: "2",
+      sender: "이지은",
+      role: "담임교사",
+      content: "네, 참석 가능합니다. 회의 전에 준비할 자료가 있을까요?",
+      timestamp: "오전 11:30",
+    },
+    {
+      id: "3",
+      sender: "김태희",
+      role: "상담교사",
+      content: "최근 학습 진도 상황과 정서적 변화에 대한 관찰 내용을 간단히 정리해주시면 좋겠습니다.",
+      timestamp: "오후 1:15",
+    },
+  ],
+  "3": [
+    {
+      id: "1",
+      sender: "박수진",
+      role: "특수교사",
+      content: "이준호 학생의 긍정적 행동 지원 계획서를 업로드했습니다. 검토 부탁드립니다.",
+      timestamp: "오전 10:00",
+      attachments: [{ name: "PBS_계획서_이준호.pdf", type: "pdf" }],
+    },
+    {
+      id: "2",
+      sender: "최민호",
+      role: "학교사회복지사",
+      content: "계획서 잘 받았습니다. 가정과의 연계 부분을 조금 더 구체화하면 좋을 것 같습니다.",
+      timestamp: "오후 2:30",
+    },
+  ],
+  "4": [
+    {
+      id: "1",
+      sender: "이지은",
+      role: "담임교사",
+      content: "최지우 학생의 학습 자료 검토 완료했습니다. 난이도가 적절한 것 같아요.",
+      timestamp: "오후 3:00",
+    },
+  ],
+  "5": [
+    {
+      id: "1",
+      sender: "김태희",
+      role: "상담교사",
+      content: "정수아 학생 상담 일정을 조율하고 싶습니다. 이번 주 금요일 오후는 어떠신가요?",
+      timestamp: "오전 9:00",
+    },
+    {
+      id: "2",
+      sender: "이지은",
+      role: "담임교사",
+      content: "금요일 오후 3시 이후면 가능합니다.",
+      timestamp: "오전 9:45",
+    },
+  ],
+  "6": [
+    {
+      id: "1",
+      sender: "박수진",
+      role: "특수교사",
+      content: "김민주 학생의 IEP 회의 자료를 준비 중입니다. 다음 주 월요일까지 완료 예정입니다.",
+      timestamp: "오후 4:00",
+    },
+    {
+      id: "2",
+      sender: "김태희",
+      role: "상담교사",
+      content: "감사합니다. 정서 발달 부분도 함께 포함해주시면 좋겠습니다.",
+      timestamp: "오후 4:30",
+    },
+  ],
+  s1: [
+    {
+      id: "1",
+      sender: "김태희",
+      role: "사회복지사",
+      content:
+        "다음 주 가정 방문 일정을 공유드립니다. 월요일 오전 10시 김민준 학생 가정, 화요일 오후 2시 박서연 학생 가정입니다.",
+      timestamp: "오전 11:00",
+    },
+    {
+      id: "2",
+      sender: "이지은",
+      role: "담임교사",
+      content: "일정 확인했습니다. 학부모님께 미리 연락드리겠습니다.",
+      timestamp: "오후 1:00",
+    },
+  ],
+  s2: [
+    {
+      id: "1",
+      sender: "이민정",
+      role: "상담사",
+      content: "정서 지원 프로그램 안내드립니다. 매주 수요일 오후 2시에 진행되며, 소그룹 활동으로 운영됩니다.",
+      timestamp: "오전 10:30",
+    },
+    {
+      id: "2",
+      sender: "박수진",
+      role: "특수교사",
+      content: "프로그램 내용이 좋네요. 이준호, 정수아 학생이 참여하면 도움이 될 것 같습니다.",
+      timestamp: "오후 2:00",
+    },
+  ],
+  s3: [
+    {
+      id: "1",
+      sender: "박수진",
+      role: "평생교육원 강사",
+      content: "경계선지능인을 위한 최신 교육 자료를 공유드립니다. 실생활 중심의 학습 활동이 많이 포함되어 있습니다.",
+      timestamp: "오전 9:00",
+      attachments: [{ name: "경계선지능_교육자료_2024.pdf", type: "pdf" }],
+    },
+  ],
+}
 
 export function CollaborationChannel() {
   const [selectedChannel, setSelectedChannel] = useState(studentChannels[0])
   const [messageInput, setMessageInput] = useState("")
   const [readChannels, setReadChannels] = useState<Set<string>>(new Set([studentChannels[0].id]))
   const [channelType, setChannelType] = useState<"students" | "specialists">("students")
+  const [showRightSidebar, setShowRightSidebar] = useState(true)
 
   const handleChannelSelect = (channel: Channel) => {
     setSelectedChannel(channel)
@@ -165,6 +274,7 @@ export function CollaborationChannel() {
   }
 
   const displayChannels = channelType === "students" ? studentChannels : specialistChannels
+  const currentMessages = channelMessages[selectedChannel.id] || []
 
   return (
     <div className="min-h-screen bg-background">
@@ -296,13 +406,16 @@ export function CollaborationChannel() {
                 <FileText className="mr-2 h-4 w-4" />
                 문서
               </Button>
+              <Button variant="outline" size="sm" onClick={() => setShowRightSidebar(!showRightSidebar)}>
+                {showRightSidebar ? <ChevronLeft className="h-4 w-4" /> : <Users className="h-4 w-4" />}
+              </Button>
             </div>
           </div>
 
           {/* Messages */}
           <ScrollArea className="flex-1 p-4">
             <div className="space-y-4">
-              {messages.map((message) => (
+              {currentMessages.map((message) => (
                 <div key={message.id} className="flex gap-3">
                   <Avatar className="h-10 w-10">
                     <AvatarFallback>{message.sender[0]}</AvatarFallback>
@@ -359,75 +472,77 @@ export function CollaborationChannel() {
         </div>
 
         {/* Right Sidebar - Channel Info */}
-        <div className="w-80 border-l bg-card">
-          <Tabs defaultValue="participants" className="h-full">
-            <TabsList className="w-full rounded-none border-b">
-              <TabsTrigger value="participants" className="flex-1">
-                참여자
-              </TabsTrigger>
-              <TabsTrigger value="files" className="flex-1">
-                파일
-              </TabsTrigger>
-            </TabsList>
+        {showRightSidebar && (
+          <div className="w-80 border-l bg-card">
+            <Tabs defaultValue="participants" className="h-full">
+              <TabsList className="w-full rounded-none border-b">
+                <TabsTrigger value="participants" className="flex-1">
+                  참여자
+                </TabsTrigger>
+                <TabsTrigger value="files" className="flex-1">
+                  파일
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="participants" className="p-4">
-              <div className="space-y-3">
-                {[
-                  { name: "이지은", role: "담임교사", status: "online" },
-                  { name: "박수진", role: "특수교사", status: "online" },
-                  { name: "김태희", role: "상담교사", status: "away" },
-                  { name: "최민호", role: "학교사회복지사", status: "offline" },
-                  { name: "정서연", role: "또래 도우미", status: "online" },
-                ].map((participant, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
-                    <div className="relative">
-                      <Avatar className="h-10 w-10">
-                        <AvatarFallback>{participant.name[0]}</AvatarFallback>
-                      </Avatar>
-                      <div
-                        className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-card ${
-                          participant.status === "online"
-                            ? "bg-green-500"
-                            : participant.status === "away"
-                              ? "bg-yellow-500"
-                              : "bg-gray-500"
-                        }`}
-                      />
+              <TabsContent value="participants" className="p-4">
+                <div className="space-y-3">
+                  {[
+                    { name: "이지은", role: "담임교사", status: "online" },
+                    { name: "박수진", role: "특수교사", status: "online" },
+                    { name: "김태희", role: "상담교사", status: "away" },
+                    { name: "최민호", role: "학교사회복지사", status: "offline" },
+                    { name: "정서연", role: "또래 도우미", status: "online" },
+                  ].map((participant, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <div className="relative">
+                        <Avatar className="h-10 w-10">
+                          <AvatarFallback>{participant.name[0]}</AvatarFallback>
+                        </Avatar>
+                        <div
+                          className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-card ${
+                            participant.status === "online"
+                              ? "bg-green-500"
+                              : participant.status === "away"
+                                ? "bg-yellow-500"
+                                : "bg-gray-500"
+                          }`}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium">{participant.name}</p>
+                        <p className="text-xs text-muted-foreground">{participant.role}</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <p className="font-medium">{participant.name}</p>
-                      <p className="text-xs text-muted-foreground">{participant.role}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
+                  ))}
+                </div>
+              </TabsContent>
 
-            <TabsContent value="files" className="p-4">
-              <div className="space-y-2">
-                {[
-                  { name: "수학_학습지_샘플.pdf", date: "오늘", size: "2.4 MB" },
-                  { name: "가정방문_보고서.docx", date: "오늘", size: "156 KB" },
-                  { name: "학부모_면담_사진.jpg", date: "어제", size: "3.1 MB" },
-                  { name: "IEP_계획서_2024.pdf", date: "2024-10-01", size: "1.8 MB" },
-                ].map((file, idx) => (
-                  <div key={idx} className="flex items-center gap-3 rounded-lg border p-3 hover:bg-accent">
-                    <FileText className="h-8 w-8 text-muted-foreground" />
-                    <div className="flex-1 overflow-hidden">
-                      <p className="truncate text-sm font-medium">{file.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {file.date} • {file.size}
-                      </p>
+              <TabsContent value="files" className="p-4">
+                <div className="space-y-2">
+                  {[
+                    { name: "수학_학습지_샘플.pdf", date: "오늘", size: "2.4 MB" },
+                    { name: "가정방문_보고서.docx", date: "오늘", size: "156 KB" },
+                    { name: "학부모_면담_사진.jpg", date: "어제", size: "3.1 MB" },
+                    { name: "IEP_계획서_2024.pdf", date: "2024-10-01", size: "1.8 MB" },
+                  ].map((file, idx) => (
+                    <div key={idx} className="flex items-center gap-3 rounded-lg border p-3 hover:bg-accent">
+                      <FileText className="h-8 w-8 text-muted-foreground" />
+                      <div className="flex-1 overflow-hidden">
+                        <p className="truncate text-sm font-medium">{file.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {file.date} • {file.size}
+                        </p>
+                      </div>
+                      <Button variant="ghost" size="sm">
+                        <Download className="h-4 w-4" />
+                      </Button>
                     </div>
-                    <Button variant="ghost" size="sm">
-                      <Download className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+        )}
       </main>
     </div>
   )
